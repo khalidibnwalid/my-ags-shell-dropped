@@ -4,6 +4,7 @@ import { execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 import Workspaces from "./Workspaces"
 import BatteryStatus from "./BatteryStatus"
+import BluetoothStatus from "./Bluetooth"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const { TOP, BOTTOM, RIGHT } = Astal.WindowAnchor
@@ -71,10 +72,12 @@ function EndSection() {
       orientation={Gtk.Orientation.VERTICAL}
       spacing={10}
     >
+      <BluetoothStatus />
       <BatteryStatus />
       <menubutton
         $type="end"
         direction={Gtk.ArrowType.LEFT}
+        cssClasses={["ghost"]}
       >
         <label cssName="clock" label={time.as(t => t.replace(":", "\n"))} />
         <popover>
