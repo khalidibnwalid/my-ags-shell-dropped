@@ -1,6 +1,6 @@
 import { Gtk } from "ags/gtk4"
 import Hyprland from "gi://AstalHyprland"
-import { createBinding, For } from "gnim"
+import { createBinding, For, With } from "gnim"
 
 const MAX_WORKSPACES = 10
 
@@ -9,6 +9,7 @@ const hyprland = Hyprland.get_default()
 export default function Workspaces() {
 
   const workspaces = createBinding(hyprland, "workspaces")
+  const clients = createBinding(hyprland, "clients")
   const activeWsBinding = createBinding(hyprland, "focusedWorkspace")
 
   // show all workspaces from 1 to max existing workspace id
@@ -27,23 +28,35 @@ export default function Workspaces() {
       spacing={4}
     >
       <For each={allWorkspaces}>
-        {(wsId) => (
-          <button
-            cssClasses={activeWsBinding.as(active => active?.id === wsId
-              ? ["active"]
-              : [""]
-            )}
-            onClicked={() => {
-              const ws = hyprland.get_workspace(wsId)
-              if (ws) {
-                ws.focus()
-              } else {
-                // Create and switch to workspace if it doesn't exist
-                hyprland.dispatch("workspace", (wsId).toString())
-              }
-            }}
-          />
-        )}
+        {(wsId) => {
+          const isActive = activeWsBinding.as(active => active?.id === wsId)
+          const hasClients = clients.as(clients => clients.some(c => c.workspace?.id === wsId))
+
+          return (
+            <button
+              cssClasses={isActive.as(e => e ? ["active"] : [""])}
+              onClicked={() => {
+                const ws = hyprland.get_workspace(wsId)
+                if (ws) {
+                  ws.focus()
+                } else {
+                  // Create and switch to workspace if it doesn't exist
+                  hyprland.dispatch("workspace", (wsId).toString())
+                }
+              }}
+            >
+              <With value={hasClients}>
+                {(hasClients: boolean) => hasClients &&
+                  <image
+                    cssClasses={isActive.as(e => e ? ["active"] : [""])}
+                    iconName="m-mini-circle-fill"
+                    pixelSize={20}
+                  />
+                }
+              </With>
+            </button>
+          )
+        }}
       </For>
     </box>
   )
