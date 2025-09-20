@@ -8,17 +8,16 @@ export default function BatteryStatus() {
     const batteryPercentage = createBinding(battery, "percentage")
     const batteryState = createBinding(battery, "state")
 
-    const betteryData = createComputed((get) => {
-        return {
-            percentage: get(batteryPercentage),
-            state: get(batteryState),
-        }
-    })
+    const betteryData = createComputed((get) => ({
+        percentage: get(batteryPercentage),
+        state: get(batteryState),
+    }))
 
     const getBatteryIconName = (percentage: number, state: Battery.State) => {
         const percentageValue = percentage * 100
 
-        if (state === Battery.State.CHARGING || state === Battery.State.PENDING_CHARGE) {
+        if (state === Battery.State.CHARGING ||
+            state === Battery.State.PENDING_CHARGE) {
             return "m-battery-charging"
         }
 
@@ -50,15 +49,15 @@ export default function BatteryStatus() {
                         <image
                             $type="start"
                             iconName={getBatteryIconName(percentage, state)}
-                            pixelSize={32}
+                            pixelSize={24}
                         />
                     )}
                 </With>
             </box>
-            <label
+            {/* <label
                 $type="end"
                 label={batteryPercentage.as(p => `${Math.round(p * 100)}%`)}
-            />
+            /> */}
         </box>
     )
 }

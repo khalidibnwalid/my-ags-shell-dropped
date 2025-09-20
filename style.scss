@@ -1,36 +1,52 @@
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
-$fg-color: #{"@theme_fg_color"};
-$bg-color: #{"@theme_bg_color"};
 // $bg-color-56: #{"@theme_bg_color"}56;
 // $selected-bg-color: #{"@theme_selected_bg_color"};
-$selected-bg-color: #f1f1f1;
+// $selected-bg-color: #f1f1f1;
 // $selected-fg-color: #{"@theme_selected_fg_color"};
-$selected-fg-color: #282828;
-$base-color: #{"@theme_base_color"};
+// $base-color: #{"@theme_base_color"};
 // $pure-theme: #121212;
-$pure-theme: #000000;
-$pure-theme-56: #{$pure-theme}56;
+
+$bg-color: #{"@theme_bg_color"};
+$fg-color: #{"@theme_fg_color"};
+$accent-color: #A3A1D6;
+$accent-muted-color: #c2c1ff;
+$accent-fg-color: #282828;
+$pure-theme: #000000; // black for dark mode, white for light mode
+$pure-theme-99: #{$pure-theme}99;
+
+$window-shadow: 0 2px 8px $pure-theme;
+$bar-width: 40px;
+$cubic-bezier: cubic-bezier(0.05, 0.7, 0.1, 1);
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
 window.Bar {
-  background: $pure-theme-56;
+  background: 'transparent';
   color: $fg-color;
   font-weight: bold;
 
   >centerbox {
-    background: $pure-theme;
+    background: "transparent";
     border-radius: 10px;
-    // margin: 2px;
+    margin-right: 4px;
     padding: 12px 2px;
-    min-width: 40px;
+    min-width: $bar-width;
+    transition: 400ms $cubic-bezier;
+
+    &.in-client {
+      background: $pure-theme-99;
+      margin-right: 0px;
+      border-radius: 0px;
+      padding: 12px 1px;
+    }
   }
 
   clock {
@@ -39,26 +55,48 @@ window.Bar {
     letter-spacing: 0.5px;
     font-weight: bold;
     font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
+    color: $accent-muted-color;
 
     :hover {
       color: $bg-color;
     }
   }
 
+  .island {
+    background: $pure-theme;
+    padding: 10px 5px;
+    border-radius: 40px;
+
+    box-shadow: $window-shadow;
+  }
+
+  button.island {
+    transition: 400ms $cubic-bezier;
+
+    &:hover {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+  }
+
   button,
   menubutton {
     background: transparent;
-    transition: 400ms cubic-bezier(0.05, 0.7, 0.1, 1);
+    transition: 400ms $cubic-bezier;
     padding: 0px;
     margin: 0px;
 
     &.bg {
-      background: $selected-fg-color;
+      background: $accent-fg-color;
       border-radius: 8px;
 
       &:hover {
-        background: $selected-bg-color;
-        color: $selected-fg-color;
+        background: $accent-color;
+        color: $accent-fg-color;
       }
     }
 
@@ -71,12 +109,11 @@ window.Bar {
     }
   }
 
-
   workspaces {
     button {
-      background: $selected-fg-color;
+      background: $accent-fg-color;
 
-      transition: 400ms cubic-bezier(0.05, 0.7, 0.1, 1);
+      transition: 400ms $cubic-bezier;
       // border: 2px solid $selected-fg-color;
       min-width: 25px;
       min-height: 25px;
@@ -87,7 +124,7 @@ window.Bar {
       margin: 2px;
 
       &:hover {
-        background: $selected-bg-color;
+        background: $accent-color;
 
         image {
           filter: brightness(0);
@@ -95,7 +132,7 @@ window.Bar {
       }
 
       &.active {
-        background: $selected-bg-color;
+        background: $accent-color;
         min-height: 40px;
 
         image {
@@ -107,14 +144,27 @@ window.Bar {
   }
 
   bluetooth-popover {
-    background: $pure-theme-56;
+    background: $pure-theme;
     border-radius: 20px;
-    padding: 20px;
-    margin-right: 10px;
+    padding: 8px;
+    margin-right: 12px;
     animation: fadeIn 0.2s ease-in-out;
+    box-shadow: $window-shadow;
 
-    box {
-      min-width: 200px;
+    >box {
+      // min-width: 400px;
+    }
+
+    bluetooth-device-item {
+      padding: 8px 12px;
+      border-radius: 12px;
+      transition: 200ms ease-in-out;
+
+      &:hover {
+        background: $accent-color;
+        color: $accent-fg-color;
+      }
     }
   }
+
 }

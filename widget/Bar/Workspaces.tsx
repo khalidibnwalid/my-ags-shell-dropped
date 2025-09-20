@@ -24,6 +24,7 @@ export default function Workspaces() {
     <box
       $type="center"
       cssName="workspaces"
+      cssClasses={["island"]}
       orientation={Gtk.Orientation.VERTICAL}
       spacing={4}
     >
@@ -50,7 +51,7 @@ export default function Workspaces() {
                   <image
                     cssClasses={isActive.as(e => e ? ["active"] : [""])}
                     iconName="m-mini-circle-fill"
-                    pixelSize={20}
+                    pixelSize={16}
                   />
                 }
               </With>

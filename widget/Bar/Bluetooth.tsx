@@ -20,7 +20,7 @@ export default function BluetoothManager() {
         >
             <image
                 iconName={bluetoothIcon}
-                pixelSize={28}
+                pixelSize={24}
             />
             <popover
                 cssName="bluetooth-popover"
@@ -107,7 +107,10 @@ function DeviceItem({ device }: { device: Bluetooth.Device }) {
     const pairedBinding = createBinding(device, "paired")
 
     return (
-        <box spacing={8}>
+        <box
+            spacing={8}
+            cssName="bluetooth-device-item"
+        >
             <image
                 iconName={device.icon || "m-bluetooth"}
                 pixelSize={16}
