@@ -3,6 +3,7 @@ import app from "ags/gtk4/app"
 import { execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 import Workspaces from "./Workspaces"
+import BatteryStatus from "./BatteryStatus"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const { TOP, BOTTOM, RIGHT } = Astal.WindowAnchor
@@ -61,14 +62,20 @@ function CenterSection() {
 }
 
 function EndSection() {
-  const time = createPoll("", 1000, "date +%H:%M")
+  const time = createPoll("", 1000, "date +%I:%M")
 
   return (
     <box
       $type="end"
       halign={Gtk.Align.CENTER}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={10}
     >
-      <menubutton $type="end" cssClasses={["ghost"]}>
+      <BatteryStatus />
+      <menubutton
+        $type="end"
+        direction={Gtk.ArrowType.LEFT}
+      >
         <label cssName="clock" label={time.as(t => t.replace(":", "\n"))} />
         <popover>
           <Gtk.Calendar />

@@ -6,6 +6,8 @@ $selected-bg-color: #f1f1f1;
 // $selected-fg-color: #{"@theme_selected_fg_color"};
 $selected-fg-color: #282828;
 $base-color: #{"@theme_base_color"};
+// $pure-theme: #121212;
+$pure-theme: #000000;
 
 window.Bar {
   background: transparent;
@@ -13,23 +15,23 @@ window.Bar {
   font-weight: bold;
 
   >centerbox {
-    background: $bg-color;
+    background: $pure-theme;
     border-radius: 10px;
-    margin: 2px;
-    padding: 8px 2px;
+    // margin: 2px;
+    padding: 12px 2px;
     min-width: 40px;
   }
 
   clock {
-    font-size: 18px;
-    line-height: 1.2;
-    font-weight: bolder;
-  }
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
 
-  .ghost {
-    background: transparent !important;
-    border: none;
-    color: $fg-color;
+    :hover {
+      color: $bg-color;
+    }
   }
 
   button {
