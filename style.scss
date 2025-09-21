@@ -167,4 +167,61 @@ window.Bar {
     }
   }
 
+  quicksettings-popover {
+    background: 'transparent';
+    margin: 0 12px 12px 0;
+    animation: fadeIn 0.2s ease-in-out;
+    border-radius: 30px;
+
+    stack {
+      background: $pure-theme;
+      margin: 0px;
+      padding: 10px;
+      border-radius: 30px;
+    }
+
+    box {
+      // min-width: 400px;
+    }
+  }
+
+  quicksettings-button {
+    $radius: 20px;
+
+    button,
+    quicksettings-togglebutton {
+      background: $accent-fg-color;
+      color: $fg-color;
+      font-size: 18px;
+      border-radius: 5px;
+      padding: 16px 24px;
+
+      &:hover,
+      &.toggle {
+        background: $accent-color;
+        color: $accent-fg-color;
+
+        image {
+          filter: brightness(0);
+        }
+      }
+    }
+
+    quicksettings-togglebutton {
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
+    }
+
+    button {
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+  }
+
+  .bluetoothpage {
+    padding: 10px;
+  }
 }

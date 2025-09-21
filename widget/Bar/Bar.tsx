@@ -3,10 +3,11 @@ import app from "ags/gtk4/app"
 import { execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 import Hyprland from "gi://AstalHyprland"
+import { createBinding } from "gnim"
 import BatteryStatus from "./BatteryStatus"
 import BluetoothStatus from "./Bluetooth"
+import QuickSettings from "./QuickSettings/QuickSettings"
 import Workspaces from "./Workspaces"
-import { createBinding } from "gnim"
 
 const hyprland = Hyprland.get_default()
 
@@ -83,17 +84,27 @@ function EndSection() {
       orientation={Gtk.Orientation.VERTICAL}
       spacing={10}
     >
-      <box
-        cssClasses={["island"]}
-        halign={Gtk.Align.CENTER}
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={10}
+      <menubutton
+        direction={Gtk.ArrowType.LEFT}
+        cssClasses={["ghost"]}
       >
-        <BluetoothStatus />
-        <BatteryStatus />
-        <Clock />
-      </box>
-    </box>
+        <box
+          cssClasses={["island"]}
+          halign={Gtk.Align.CENTER}
+          orientation={Gtk.Orientation.VERTICAL}
+          spacing={10}
+        >
+          <BluetoothStatus />
+          <BatteryStatus />
+          <Clock />
+        </box>
+        <popover
+          cssName="quicksettings-popover"
+        >
+          <QuickSettings />
+        </popover>
+      </menubutton>
+    </box >
   )
 }
 
@@ -101,15 +112,6 @@ function Clock() {
   const time = createPoll("", 1000, "date +%I:%M")
 
   return (
-    <menubutton
-      $type="end"
-      direction={Gtk.ArrowType.LEFT}
-      cssClasses={["ghost"]}
-    >
-      <label cssName="clock" label={time.as(t => t.replace(":", "\n"))} />
-      <popover>
-        <Gtk.Calendar />
-      </popover>
-    </menubutton>
+    <label cssName="clock" label={time.as(t => t.replace(":", "\n"))} />
   )
 }
