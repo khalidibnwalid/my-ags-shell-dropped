@@ -33,25 +33,31 @@ export function BluetoothPage({ returnToMain }: { returnToMain: () => void }) {
     return (
         <box
             name="bluetoothpage"
-            class="bluetoothpage"
+            class="page"
             orientation={Gtk.Orientation.VERTICAL}
             valign={Gtk.Align.FILL}
             vexpand
             spacing={16}
         >
-            <box orientation={Gtk.Orientation.HORIZONTAL} spacing={8} halign={Gtk.Align.START} >
+            <box
+                orientation={Gtk.Orientation.HORIZONTAL}
+                spacing={8}
+                halign={Gtk.Align.START}
+                hexpand
+            >
                 <button
                     onClicked={returnToMain}
+                    cssClasses={["circle"]}
                 >
                     <image
                         iconName="m-arrow-left"
-                        pixelSize={24}
+                        pixelSize={20}
                     />
                 </button>
-                <label label="Bluetooth" hexpand />
+                <label class="header" label="Bluetooth" hexpand />
 
                 <button
-                    $type="end"
+                    halign={Gtk.Align.END}
                     iconName="view-refresh-symbolic"
                     onClicked={() => {
                         bluetooth.adapter?.start_discovery()
@@ -64,13 +70,14 @@ export function BluetoothPage({ returnToMain }: { returnToMain: () => void }) {
             </box>
             <With value={enabledBinding}>
                 {(enabled: boolean) => enabled ? (
-                    <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+                    <box orientation={Gtk.Orientation.VERTICAL} spacing={4} vexpand>
                         <scrolledwindow
                             maxContentHeight={400}
                             vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
                             hscrollbarPolicy={Gtk.PolicyType.NEVER}
+                            vexpand
                         >
-                            <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+                            <box orientation={Gtk.Orientation.VERTICAL} spacing={6}>
                                 <For each={devicesBinding}>
                                     {(device) => <DeviceItem device={device} />}
                                 </For>
@@ -100,48 +107,62 @@ export function BluetoothPage({ returnToMain }: { returnToMain: () => void }) {
 
 function DeviceItem({ device }: { device: Bluetooth.Device }) {
     const connectedBinding = createBinding(device, "connected")
-    const pairedBinding = createBinding(device, "paired")
+    const connectingBinding = createBinding(device, "connecting")
+    // const pairedBinding = createBinding(device, "paired")
+
+    async function connect(connected: boolean) {
+        try {
+            if (connected) {
+                device.disconnect_device(null)
+            } else {
+                if (!device.paired) device.pair()
+                device.connect_device(null)
+            }
+        } catch (error) {
+            console.error(`Bluetooth operation failed: ${error}`)
+        }
+    }
 
     return (
         <box
             spacing={8}
-            cssName="bluetooth-device-item"
+            cssName="device-item"
+            cssClasses={connectedBinding.as(connected => connected ? ["active"] : [])}
         >
             <image
                 iconName={device.icon || "m-bluetooth"}
                 pixelSize={16}
             />
-            <box orientation={Gtk.Orientation.VERTICAL} spacing={2} hexpand>
-                <label
-                    label={device.name || device.address}
-                    halign={Gtk.Align.START}
-                />
-                <With value={connectedBinding}>
+            {/* <box orientation={Gtk.Orientation.VERTICAL} spacing={2} hexpand> */}
+            <label
+                label={device.name || device.address}
+                halign={Gtk.Align.CENTER}
+                hexpand
+            />
+            {/* <With value={connectedBinding}>
                     {(connected: boolean) => (
                         <label
                             label={connected ? "Connected" : pairedBinding.as(paired => paired ? "Paired" : "Available")}
                             halign={Gtk.Align.START}
                         />
                     )}
-                </With>
-            </box>
+                </With> */}
+            {/* </box> */}
             <With value={connectedBinding}>
                 {(connected: boolean) => (
                     <button
-                        label={connected ? "Disconnect" : "Connect"}
-                        onClicked={async () => {
-                            try {
-                                if (connected) {
-                                    await device.disconnect_device()
-                                } else {
-                                    if (!device.paired) device.pair()
-                                    device.connect_device(null)
-                                }
-                            } catch (error) {
-                                console.error(`Bluetooth operation failed: ${error}`)
-                            }
-                        }}
-                    />
+                        //TODO: add  "rotating" on connecting
+                        cssClasses={connectingBinding.as(connecting => connecting
+                            ? ["circle", "rotating"]
+                            : ["circle"]
+                        )}
+                        onClicked={async () => connect(connected)}
+                    >
+                        <image
+                            iconName={connected ? "m-link-off" : "m-link"}
+                            pixelSize={16}
+                        />
+                    </button>
                 )}
             </With>
         </box>

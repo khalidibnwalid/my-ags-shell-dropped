@@ -80,6 +80,7 @@ export function ButtonWithOptions({
         >
             <togglebutton
                 cssName='quicksettings-togglebutton'
+                class={active ? "toggled" : ""}
                 active={active}
                 onToggled={onToggled}
             >

@@ -8,14 +8,16 @@ export default function BluetoothManager() {
     // TODO: icon if connected
 
     return (
-        <With value={enabledBinding}>
-            {(enabled) => (
-                <image
-                    iconName={enabled ? "m-bluetooth" : "m-bluetooth-disabled"}
-                    pixelSize={24}
-                />
-            )}
-        </With>
+        <box>
+            <With value={enabledBinding}>
+                {(enabled) => (
+                    <image
+                        iconName={enabled ? "m-bluetooth" : "m-bluetooth-disabled"}
+                        pixelSize={24}
+                    />
+                )}
+            </With>
+        </box>
     )
 }
 
