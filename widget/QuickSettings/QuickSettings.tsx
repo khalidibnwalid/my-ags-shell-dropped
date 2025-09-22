@@ -1,3 +1,6 @@
+import { Astal, Gdk } from "ags/gtk4"
+import app from "ags/gtk4/app"
+
 import { Gtk } from "ags/gtk4";
 import { createState, onCleanup } from "gnim";
 import { BluetoothButton, BluetoothPage } from "./pages/Bluetooth";
@@ -8,7 +11,25 @@ const [qsPage, setQsPage] = createState<Pages>("mainpage")
 
 const returnToMain = () => setQsPage("mainpage")
 
-export default function QuickSettings() {
+export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
+    const { BOTTOM, RIGHT } = Astal.WindowAnchor
+
+    return (
+        <window
+            visible={false}
+            name="quicksettings-window"
+            class="Quicksettings"
+            namespace="kshell-bar"
+            gdkmonitor={gdkmonitor}
+            exclusivity={Astal.Exclusivity.EXCLUSIVE}
+            anchor={BOTTOM | RIGHT}
+            application={app}
+        >
+            <Body />
+        </window>
+    )
+}
+function Body() {
     onCleanup(() => {
         setQsPage("mainpage")
     })

@@ -6,7 +6,6 @@ import Hyprland from "gi://AstalHyprland"
 import { createBinding } from "gnim"
 import BatteryStatus from "./BatteryStatus"
 import BluetoothStatus from "./Bluetooth"
-import QuickSettings from "./QuickSettings/QuickSettings"
 import Workspaces from "./Workspaces"
 
 const hyprland = Hyprland.get_default()
@@ -76,6 +75,14 @@ function CenterSection() {
 }
 
 function EndSection() {
+
+  function openQuickSettings() {
+    const quicksettingsWindow = app.get_window("quicksettings-window")
+    if (quicksettingsWindow) {
+      quicksettingsWindow.visible = !quicksettingsWindow.visible
+    }
+  }
+
   return (
     <box
       cssName="end-section"
@@ -84,9 +91,9 @@ function EndSection() {
       orientation={Gtk.Orientation.VERTICAL}
       spacing={10}
     >
-      <menubutton
-        direction={Gtk.ArrowType.LEFT}
+      <button
         cssClasses={["ghost"]}
+        onClicked={openQuickSettings}
       >
         <box
           cssClasses={["island"]}
@@ -98,12 +105,7 @@ function EndSection() {
           <BatteryStatus />
           <Clock />
         </box>
-        <popover
-          cssName="quicksettings-popover"
-        >
-          <QuickSettings />
-        </popover>
-      </menubutton>
+      </button>
     </box >
   )
 }
