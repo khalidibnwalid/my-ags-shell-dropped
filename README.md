@@ -4,6 +4,7 @@ dependencies
 - astel-bluetooth
 - astel-hyprland
 - astel-battery
+- astel-network
 
 hyprland configs
 

@@ -1,11 +1,10 @@
-import { Astal, Gdk } from "ags/gtk4"
-import app from "ags/gtk4/app"
-
-import { Gtk } from "ags/gtk4";
-import { createState, onCleanup } from "gnim";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
+import app from "ags/gtk4/app";
+import { Accessor, createState, onCleanup } from "gnim";
 import { BluetoothButton, BluetoothPage } from "./pages/Bluetooth";
+import { NetworkButton, NetworkPage } from "./pages/Network";
 
-type Pages = "mainpage" | "bluetoothpage"
+type Pages = "mainpage" | "bluetoothpage" | "networkpage"
 
 const [qsPage, setQsPage] = createState<Pages>("mainpage")
 
@@ -24,16 +23,14 @@ export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
             anchor={BOTTOM | RIGHT}
             application={app}
+            keymode={Astal.Keymode.ON_DEMAND}
+            onNotifyVisible={({ visible }) => !visible && setQsPage("mainpage")}
         >
             <Body />
         </window>
     )
 }
 function Body() {
-    onCleanup(() => {
-        setQsPage("mainpage")
-    })
-
     return (
         <stack
             name="controlpanel"
@@ -48,6 +45,10 @@ function Body() {
         >
             <MainPage $type="named" />
             <BluetoothPage
+                $type="named"
+                returnToMain={returnToMain}
+            />
+            <NetworkPage
                 $type="named"
                 returnToMain={returnToMain}
             />
@@ -72,6 +73,7 @@ function MainPage() {
                 spacing={8}
                 hexpand
             >
+                <NetworkButton />
                 <BluetoothButton />
             </box>
             {/* <Gtk.Calendar /> */}
@@ -80,7 +82,7 @@ function MainPage() {
 }
 
 interface ButtonWithOptionsProps {
-    label: string;
+    label: string | Accessor<string>;
     iconName: string;
     pageName: Pages;
     active: boolean;

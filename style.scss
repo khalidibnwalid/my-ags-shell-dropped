@@ -185,6 +185,13 @@ window.Quicksettings {
   padding: 10px;
   //   animation: fadeIn 0.2s ease-in-out;
 
+  label.dim {
+    color: $fg-color;
+    opacity: 0.6;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
   quicksettings-button {
     $radius: 20px;
 
@@ -212,6 +219,8 @@ window.Quicksettings {
     quicksettings-togglebutton {
       border-top-left-radius: $radius;
       border-bottom-left-radius: $radius;
+
+      min-width: 120px;
     }
 
     button {
@@ -236,10 +245,11 @@ window.Quicksettings {
       border-radius: 12px;
       transition: 200ms ease-in-out;
 
+      margin-right: 12px; // so it won't overlap with scrollbar
+
       &:hover {
         background: $accent-fg-color;
       }
-
 
       &.active {
         background: $accent-color;

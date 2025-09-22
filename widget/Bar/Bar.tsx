@@ -7,6 +7,7 @@ import { createBinding } from "gnim"
 import BatteryStatus from "./BatteryStatus"
 import BluetoothStatus from "./Bluetooth"
 import Workspaces from "./Workspaces"
+import { NetworkStatus } from "../QuickSettings/pages/Network"
 
 const hyprland = Hyprland.get_default()
 
@@ -101,6 +102,7 @@ function EndSection() {
           orientation={Gtk.Orientation.VERTICAL}
           spacing={10}
         >
+          <NetworkStatus />
           <BluetoothStatus />
           <BatteryStatus />
           <Clock />

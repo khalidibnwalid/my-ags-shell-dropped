@@ -1,28 +1,46 @@
 import { Gtk } from "ags/gtk4";
 import Bluetooth from "gi://AstalBluetooth";
-import { createBinding, For, With } from "gnim";
+import { createBinding, createComputed, For, With } from "gnim";
 import { ButtonWithOptions } from "../QuickSettings";
 
 const bluetooth = Bluetooth.get_default()
 
 export function BluetoothButton() {
     const enabledBinding = createBinding(bluetooth, "isPowered")
+    const connectingBinding = createBinding(bluetooth, "isConnected")
+
+    const label = createBinding(bluetooth, "devices")
+        .as(devices => {
+            const device = devices.find(device => device.connected)
+            if (!device) return "Bluetooth"
+
+            const name = device.name || device.address
+            return name.length > 5 ? name.slice(0, 7) + "…" : name
+        })
+
+    const connection = createComputed((get) => ({
+        isConnected: get(connectingBinding), // I just want want it as a dependency for re-computation
+        isPowered: get(enabledBinding),
+        label: get(label),
+    }))
 
     // TODO: icon if connected
     return (
-        <With value={enabledBinding}>
-            {(enabled: boolean) => (
-                <ButtonWithOptions
-                    pageName="bluetoothpage"
-                    onToggled={({ active }) =>
-                        bluetooth.adapter?.set_powered(active)
-                    }
-                    label="Bluetooth"
-                    active={enabled}
-                    iconName={enabled ? "m-bluetooth" : "m-bluetooth-disabled"}
-                />
-            )}
-        </With>
+        <box>
+            <With value={connection}>
+                {({ isPowered, label }) => (
+                    <ButtonWithOptions
+                        pageName="bluetoothpage"
+                        onToggled={({ active }) =>
+                            bluetooth.adapter?.set_powered(active)
+                        }
+                        label={label}
+                        active={isPowered}
+                        iconName={isPowered ? "m-bluetooth" : "m-bluetooth-disabled"}
+                    />
+                )}
+            </With>
+        </box>
     )
 }
 
