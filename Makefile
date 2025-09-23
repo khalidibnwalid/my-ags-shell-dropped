@@ -6,3 +6,6 @@ build: ./app.ts
 
 run: ./app.ts
 	ags run .
+
+dev: 
+	air

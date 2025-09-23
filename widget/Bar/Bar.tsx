@@ -8,6 +8,7 @@ import BatteryStatus from "./BatteryStatus"
 import BluetoothStatus from "./Bluetooth"
 import Workspaces from "./Workspaces"
 import { NetworkStatus } from "../QuickSettings/pages/Network"
+import { VolumeStatus } from "../QuickSettings/pages/VolumeSlider"
 
 const hyprland = Hyprland.get_default()
 
@@ -104,6 +105,7 @@ function EndSection() {
         >
           <NetworkStatus />
           <BluetoothStatus />
+          <VolumeStatus />
           <BatteryStatus />
           <Clock />
         </box>

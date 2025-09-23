@@ -5,6 +5,7 @@ dependencies
 - astel-hyprland
 - astel-battery
 - astel-network
+- wireplumber
 
 hyprland configs
 

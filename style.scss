@@ -176,13 +176,19 @@ window.Bar {
 }
 
 window.Quicksettings {
-  min-width: 300px;
-  min-height: 300px;
-  background: $pure-theme-99;
-  box-shadow: $window-shadow;
-  margin: 0 12px 12px 0;
-  border-radius: 30px;
-  padding: 10px;
+  background: 'transparent';
+  padding-right: $bar-width; // modal offset
+
+  stack.controlpanel {
+    min-width: 300px;
+    min-height: 300px;
+    background: $pure-theme-99;
+    box-shadow: $window-shadow;
+    margin: 0 12px 12px 0;
+    border-radius: 30px;
+    padding: 10px;
+  }
+
   //   animation: fadeIn 0.2s ease-in-out;
 
   label.dim {
@@ -190,6 +196,32 @@ window.Quicksettings {
     opacity: 0.6;
     font-size: 14px;
     font-weight: normal;
+  }
+
+  button.ghost {
+    background: 'transparent';
+    color: $fg-color;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 4px;
+
+    transition: 150ms ease-in-out;
+
+    &.circle {
+      border-radius: 100%;
+      padding: 2px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+
+    &:hover {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
   }
 
   quicksettings-button {
@@ -285,4 +317,32 @@ window.Quicksettings {
       transform-origin: center center;
     }
   }
+
+  $slider-height: 16px;
+
+  slider {
+    background: $accent-fg-color;
+    min-height: $slider-height;
+    min-width: $slider-height;
+    box-shadow: none;
+  }
+
+  trough {
+    background: 'transparent';
+    border-radius: 20px;
+  }
+
+  trough highlight {
+    background: $accent-color;
+    min-height: $slider-height;
+  }
+
+  // trough slider {
+  //   border-radius: 50%;
+  //   margin: -4px 0;
+  //   background: $pure-theme;
+  //   min-width: 1.2em;
+  //   min-height: 1.2em;
+  // }
+
 }

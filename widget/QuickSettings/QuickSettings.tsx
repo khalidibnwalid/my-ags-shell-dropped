@@ -1,8 +1,10 @@
-import { Astal, Gdk, Gtk } from "ags/gtk4";
+import { Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
-import { Accessor, createState, onCleanup } from "gnim";
+import { Accessor, createState } from "gnim";
+import { Modal } from "../Modal";
 import { BluetoothButton, BluetoothPage } from "./pages/Bluetooth";
 import { NetworkButton, NetworkPage } from "./pages/Network";
+import { VolumeSlider } from "./pages/VolumeSlider";
 
 type Pages = "mainpage" | "bluetoothpage" | "networkpage"
 
@@ -11,23 +13,23 @@ const [qsPage, setQsPage] = createState<Pages>("mainpage")
 const returnToMain = () => setQsPage("mainpage")
 
 export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
-    const { BOTTOM, RIGHT } = Astal.WindowAnchor
-
     return (
-        <window
+        <Modal
             visible={false}
             name="quicksettings-window"
             class="Quicksettings"
             namespace="kshell-bar"
             gdkmonitor={gdkmonitor}
-            exclusivity={Astal.Exclusivity.EXCLUSIVE}
-            anchor={BOTTOM | RIGHT}
             application={app}
-            keymode={Astal.Keymode.ON_DEMAND}
+            halign={Gtk.Align.END}
+            valign={Gtk.Align.END}
             onNotifyVisible={({ visible }) => !visible && setQsPage("mainpage")}
+            onActivateFocus={() => {
+                print("Quick Settings activated")
+            }}
         >
             <Body />
-        </window>
+        </Modal>
     )
 }
 function Body() {
@@ -76,6 +78,7 @@ function MainPage() {
                 <NetworkButton />
                 <BluetoothButton />
             </box>
+            <VolumeSlider />
             {/* <Gtk.Calendar /> */}
         </box>
     )
