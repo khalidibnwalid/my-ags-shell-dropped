@@ -141,6 +141,10 @@ window.Bar {
   }
 
   workspaces {
+    image {
+      filter: grayscale(100%) invert(1) brightness(2);
+    }
+
     button {
       background: $accent-fg-color;
 
@@ -154,7 +158,8 @@ window.Bar {
       padding: 0;
       margin: 2px;
 
-      &:hover {
+      &:hover,
+      &.active {
         background: $accent-color;
 
         image {
@@ -163,12 +168,7 @@ window.Bar {
       }
 
       &.active {
-        background: $accent-color;
-        min-height: 40px;
-
-        image {
-          filter: brightness(0);
-        }
+        padding: 10px 0px;
       }
 
     }
@@ -177,7 +177,7 @@ window.Bar {
 
 window.Quicksettings {
   background: 'transparent';
-  padding-right: $bar-width; // modal offset
+  padding-right: $bar-width + 4; // modal offset
 
   stack.controlpanel {
     min-width: 300px;
