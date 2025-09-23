@@ -1,0 +1,178 @@
+@use 'variables' as *;
+
+window.Quicksettings {
+  background: 'transparent';
+  padding-right: $bar-width + 4; // modal offset
+
+  stack.controlpanel {
+    min-width: 300px;
+    min-height: 300px;
+    background: $pure-theme-99;
+    box-shadow: $window-shadow;
+    margin: 0 12px 12px 0;
+    border-radius: 30px;
+    padding: 10px;
+  }
+
+  label.dim {
+    color: $fg-color;
+    opacity: 0.6;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  button.ghost {
+    background: 'transparent';
+    color: $fg-color;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 4px;
+
+    transition: 150ms ease-in-out;
+
+    &.circle {
+      border-radius: 100%;
+      padding: 2px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+
+    &:hover {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+  }
+
+  power-profile-button {
+    background: $accent-fg-color;
+    color: $fg-color;
+    font-size: 18px;
+    border-radius: 30px;
+    padding: 16px 24px;
+    transition: 150ms ease-in-out;
+
+    &:hover,
+    &.active {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+  }
+
+  quicksettings-button {
+    $radius: 20px;
+
+    button,
+    quicksettings-togglebutton {
+      background: $accent-fg-color;
+      color: $fg-color;
+      font-size: 18px;
+      border-radius: 5px;
+      padding: 16px 24px;
+
+      transition: 150ms ease-in-out;
+
+      &:hover,
+      &.toggled {
+        background: $accent-color;
+        color: $accent-fg-color;
+
+        image {
+          filter: brightness(0);
+        }
+      }
+    }
+
+    quicksettings-togglebutton {
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
+
+      min-width: 150px;
+    }
+
+    button {
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+
+  .page {
+    padding: 10px;
+
+    label.header {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    page-list-item {
+      padding: 8px 12px;
+      border-radius: 12px;
+      transition: 200ms ease-in-out;
+
+      margin-right: 12px; // so it won't overlap with scrollbar
+
+      &:hover {
+        background: $accent-fg-color;
+      }
+
+      &.active {
+        background: $accent-color;
+        color: $accent-fg-color;
+      }
+    }
+  }
+
+  button.circle {
+    background: $accent-fg-color;
+    color: $fg-color;
+    font-size: 14px;
+    border-radius: 100%;
+    min-width: 20px;
+    min-height: 20px;
+    padding: 8px;
+
+    &:hover {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+
+    &.rotating {
+      animation: rotating 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+      transform-origin: center center;
+    }
+  }
+
+  .quicksettings-slider {
+    $slider-height: 16px;
+
+    slider {
+      background: $accent-fg-color;
+      min-height: $slider-height;
+      min-width: $slider-height;
+      box-shadow: none;
+    }
+
+    trough {
+      background: 'transparent';
+      border-radius: 20px;
+    }
+
+    trough highlight {
+      background: $accent-color;
+      min-height: $slider-height;
+    }
+  }
+}

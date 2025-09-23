@@ -1,0 +1,16 @@
+// colors
+$bg-color: #{"@theme_bg_color"};
+$fg-color: #{"@theme_fg_color"};
+$accent-color: #A3A1D6;
+$accent-muted-color: #c2c1ff;
+$accent-fg-color: #282828;
+$pure-theme: #000000; // black for dark mode, white for light mode
+$pure-theme-99: #{$pure-theme}99;
+$pure-anti-theme: #ffffff; // white for dark mode, black for light mode
+
+// layout
+$window-shadow: 0 2px 8px $pure-theme;
+$bar-width: 45px;
+
+// animation
+$cubic-bezier: cubic-bezier(0.05, 0.7, 0.1, 1);

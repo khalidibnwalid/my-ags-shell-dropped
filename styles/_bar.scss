@@ -1,0 +1,127 @@
+@use 'variables' as *;
+
+window.Bar {
+  background: 'transparent';
+  color: $fg-color;
+  font-weight: bold;
+
+  >centerbox {
+    background: "transparent";
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 12px 2px;
+    min-width: $bar-width;
+    transition: 400ms $cubic-bezier;
+
+    &.in-client {
+      background: $pure-theme-99;
+      margin-right: 0px;
+      border-radius: 0px;
+      padding: 12px 1px;
+    }
+  }
+
+  clock-label {
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
+    color: $accent-muted-color;
+
+    :hover {
+      color: $bg-color;
+    }
+  }
+
+  date-label {
+    font-size: 10px;
+    padding: 0px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
+    color: $fg-color;
+  }
+
+  .island {
+    background: $pure-theme;
+    padding: 10px 5px;
+    border-radius: 40px;
+
+    box-shadow: $window-shadow;
+  }
+
+  button.island {
+    transition: 400ms $cubic-bezier;
+
+    &:hover {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+  }
+
+  button,
+  menubutton {
+    background: transparent;
+    transition: 400ms $cubic-bezier;
+    padding: 0px;
+    margin: 0px;
+
+    &.bg {
+      background: $accent-fg-color;
+      border-radius: 8px;
+
+      &:hover {
+        background: $accent-color;
+        color: $accent-fg-color;
+      }
+    }
+
+    &.ghost {
+      opacity: 1;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  workspaces {
+    image {
+      filter: grayscale(100%) invert(1) brightness(2);
+    }
+
+    button {
+      background: $accent-fg-color;
+
+      transition: 400ms $cubic-bezier;
+      // border: 2px solid $selected-fg-color;
+      min-width: 25px;
+      min-height: 25px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 40px;
+      padding: 0;
+      margin: 2px;
+
+      &:hover,
+      &.active {
+        background: $accent-color;
+
+        image {
+          filter: brightness(0);
+        }
+      }
+
+      &.active {
+        padding: 10px 0px;
+      }
+
+    }
+  }
+}

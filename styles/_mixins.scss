@@ -1,0 +1,31 @@
+@use 'variables' as *;
+
+@mixin button-base {
+  background: transparent;
+  transition: 400ms $cubic-bezier;
+  padding: 0px;
+  margin: 0px;
+}
+
+@mixin button-hover {
+  background: $accent-color;
+  color: $accent-fg-color;
+
+  image {
+    filter: brightness(0);
+  }
+}
+
+@mixin island {
+  background: $pure-theme;
+  padding: 10px 5px;
+  border-radius: 40px;
+  box-shadow: $window-shadow;
+}
+
+@mixin circle-button($size: 32px) {
+  border-radius: 100%;
+  min-width: $size;
+  min-height: $size;
+  padding: 2px;
+}
