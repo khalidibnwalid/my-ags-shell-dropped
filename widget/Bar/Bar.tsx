@@ -6,9 +6,9 @@ import Hyprland from "gi://AstalHyprland"
 import { createBinding } from "gnim"
 import { NetworkStatus } from "../QuickSettings/pages/Network"
 import { VolumeStatus } from "../QuickSettings/pages/VolumeSlider"
-import BatteryStatus from "./BatteryStatus"
 import Workspaces from "./Workspaces"
 import { BluetoothStatus } from "../QuickSettings/pages/Bluetooth"
+import { BatteryStatus } from "../QuickSettings/pages/Battery"
 
 const hyprland = Hyprland.get_default()
 

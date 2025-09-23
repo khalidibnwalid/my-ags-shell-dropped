@@ -59,6 +59,7 @@ $cubic-bezier: cubic-bezier(0.05, 0.7, 0.1, 1);
   }
 }
 
+
 window.Bar {
   background: 'transparent';
   color: $fg-color;
@@ -234,6 +235,25 @@ window.Quicksettings {
     }
   }
 
+  power-profile-button {
+    background: $accent-fg-color;
+    color: $fg-color;
+    font-size: 18px;
+    border-radius: 30px;
+    padding: 16px 24px;
+    transition: 150ms ease-in-out;
+
+    &:hover,
+    &.active {
+      background: $accent-color;
+      color: $accent-fg-color;
+
+      image {
+        filter: brightness(0);
+      }
+    }
+  }
+
   quicksettings-button {
     $radius: 20px;
 
@@ -262,7 +282,7 @@ window.Quicksettings {
       border-top-left-radius: $radius;
       border-bottom-left-radius: $radius;
 
-      min-width: 120px;
+      min-width: 150px;
     }
 
     button {
@@ -274,6 +294,7 @@ window.Quicksettings {
 
   }
 
+
   .page {
     padding: 10px;
 
@@ -282,7 +303,7 @@ window.Quicksettings {
       font-weight: bold;
     }
 
-    device-item {
+    page-list-item {
       padding: 8px 12px;
       border-radius: 12px;
       transition: 200ms ease-in-out;
@@ -328,23 +349,25 @@ window.Quicksettings {
     }
   }
 
-  $slider-height: 16px;
+  .quicksettings-slider {
+    $slider-height: 16px;
 
-  slider {
-    background: $accent-fg-color;
-    min-height: $slider-height;
-    min-width: $slider-height;
-    box-shadow: none;
-  }
+    slider {
+      background: $accent-fg-color;
+      min-height: $slider-height;
+      min-width: $slider-height;
+      box-shadow: none;
+    }
 
-  trough {
-    background: 'transparent';
-    border-radius: 20px;
-  }
+    trough {
+      background: 'transparent';
+      border-radius: 20px;
+    }
 
-  trough highlight {
-    background: $accent-color;
-    min-height: $slider-height;
+    trough highlight {
+      background: $accent-color;
+      min-height: $slider-height;
+    }
   }
 
   // trough slider {

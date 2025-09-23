@@ -4,9 +4,10 @@ import { Accessor, createState } from "gnim";
 import { Modal } from "../Modal";
 import { BluetoothButton, BluetoothPage } from "./pages/Bluetooth";
 import { NetworkButton, NetworkPage } from "./pages/Network";
+import { BatteryButton, BatteryPage } from "./pages/Battery";
 import { VolumeSlider } from "./pages/VolumeSlider";
 
-type Pages = "mainpage" | "bluetoothpage" | "networkpage"
+type Pages = "mainpage" | "bluetoothpage" | "networkpage" | "batterypage"
 
 const [qsPage, setQsPage] = createState<Pages>("mainpage")
 
@@ -54,6 +55,10 @@ function Body() {
                 $type="named"
                 returnToMain={returnToMain}
             />
+            <BatteryPage
+                $type="named"
+                returnToMain={returnToMain}
+            />
         </stack>
     )
 }
@@ -78,6 +83,14 @@ function MainPage() {
                 <NetworkButton />
                 <BluetoothButton />
             </box>
+            <box
+                orientation={Gtk.Orientation.HORIZONTAL}
+                halign={Gtk.Align.CENTER}
+                spacing={8}
+                hexpand
+            >
+                <BatteryButton />
+            </box>
             <VolumeSlider />
             {/* <Gtk.Calendar /> */}
         </box>
@@ -88,14 +101,14 @@ interface ButtonWithOptionsProps {
     label: string | Accessor<string>;
     iconName: string;
     pageName: Pages;
-    active: boolean;
+    active?: boolean;
     onToggled?: ({ active }: { active: boolean }) => void;
 }
 export function ButtonWithOptions({
     label,
     iconName,
     pageName,
-    active,
+    active = false,
     onToggled,
 }: ButtonWithOptionsProps) {
     return (

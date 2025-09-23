@@ -36,7 +36,7 @@ export function BluetoothButton() {
             if (!device) return "Bluetooth"
 
             const name = device.name || device.address
-            return name.length > 5 ? name.slice(0, 7) + "…" : name
+            return name.length > 7 ? name.slice(0, 10) + "…" : name
         })
 
     const connection = createComputed((get) => ({
@@ -163,22 +163,23 @@ function DeviceItem({ device }: { device: Bluetooth.Device }) {
     }
 
     return (
-        <box
-            spacing={8}
-            cssName="device-item"
+        <button
+            cssName="page-list-item"
             cssClasses={connectedBinding.as(connected => connected ? ["active"] : [])}
+            onClicked={() => connect(connectedBinding.get())}
         >
-            <image
-                iconName={device.icon || "m-bluetooth"}
-                pixelSize={16}
-            />
-            {/* <box orientation={Gtk.Orientation.VERTICAL} spacing={2} hexpand> */}
-            <label
-                label={device.name || device.address}
-                halign={Gtk.Align.CENTER}
-                hexpand
-            />
-            {/* <With value={connectedBinding}>
+            <box spacing={8}>
+                <image
+                    iconName={device.icon || "m-bluetooth"}
+                    pixelSize={16}
+                />
+                {/* <box orientation={Gtk.Orientation.VERTICAL} spacing={2} hexpand> */}
+                <label
+                    label={device.name || device.address}
+                    halign={Gtk.Align.CENTER}
+                    hexpand
+                />
+                {/* <With value={connectedBinding}>
                     {(connected: boolean) => (
                         <label
                             label={connected ? "Connected" : pairedBinding.as(paired => paired ? "Paired" : "Available")}
@@ -186,24 +187,24 @@ function DeviceItem({ device }: { device: Bluetooth.Device }) {
                         />
                     )}
                 </With> */}
-            {/* </box> */}
-            <With value={connectedBinding}>
-                {(connected: boolean) => (
-                    <button
-                        //TODO: add  "rotating" on connecting
-                        cssClasses={connectingBinding.as(connecting => connecting
-                            ? ["circle", "rotating"]
-                            : ["circle"]
-                        )}
-                        onClicked={async () => connect(connected)}
-                    >
-                        <image
-                            iconName={connected ? "m-link-off" : "m-link"}
-                            pixelSize={16}
-                        />
-                    </button>
-                )}
-            </With>
-        </box>
+                {/* </box> */}
+                <With value={connectedBinding}>
+                    {(connected: boolean) => (
+                        <button
+                            //TODO: add  "rotating" on connecting
+                            cssClasses={connectingBinding.as(connecting => connecting
+                                ? ["circle", "rotating"]
+                                : ["circle"]
+                            )}
+                        >
+                            <image
+                                iconName={connected ? "m-link-off" : "m-link"}
+                                pixelSize={16}
+                            />
+                        </button>
+                    )}
+                </With>
+            </box >
+        </button>
     )
 }

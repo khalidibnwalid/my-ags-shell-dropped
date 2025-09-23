@@ -65,12 +65,13 @@ export function VolumeSlider() {
                 </With>
             </button>
             <slider
+                cssClasses={['quicksettings-slider']}
                 value={volumeState.as(v => v.volume)}
                 onChangeValue={self => setVolume(self.value)}
+                widthRequest={400}
                 min={0}
                 max={1}
                 hexpand
-                widthRequest={400}
             />
         </box>
 

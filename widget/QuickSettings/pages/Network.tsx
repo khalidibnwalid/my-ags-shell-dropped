@@ -19,7 +19,7 @@ const networkState = createComputed((get) => {
 
     if (isWifi && network.wifi) {
         const ssid = network.wifi.ssid || "";
-        label = ssid.length > 5 ? ssid.slice(0, 7) + "…" : ssid;
+        label = ssid.length > 7 ? ssid.slice(0, 10) + "…" : ssid;
         active = network.wifi.enabled;
         iconName = network.wifi.iconName || "network-wireless-symbolic"
     } else if (isWired && network.wired) {
@@ -203,7 +203,7 @@ function AccessPointItem({ accessPoint }: { accessPoint: Network.AccessPoint }) 
                     return;
                 }
                 accessPoint.activate(passwordToUse, null);
-            } 
+            }
         } catch (error) {
             console.error(`WiFi connection failed: ${error}`)
         } finally {
@@ -213,70 +213,67 @@ function AccessPointItem({ accessPoint }: { accessPoint: Network.AccessPoint }) 
 
     return (
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-            <box
-                spacing={8}
-                cssName="device-item"
+            <button
+                cssName="page-list-item"
                 cssClasses={isActiveBinding.as(active => active ? ["active"] : [])}
+                onClicked={async () => {
+                    try {
+                        if (isActiveBinding.get() && network.wifi) {
+                            network.wifi.deactivate_connection(null);
+                        } else if (accessPoint.requiresPassword && !isActiveBinding.get()) {
+                            // Check if we have any existing connections for this AP
+                            const existingConnections = accessPoint.get_connections();
+                            if (existingConnections.length > 0) {
+                                // Network was connected before, try to connect directly
+                                accessPoint.activate(null, null)
+                            } else {
+                                // New network, show password field
+                                setShowPasswordField(true);
+                            }
+                        } else {
+                            connect();
+                        }
+                    } catch (error) {
+                        console.error(`WiFi toggle failed: ${error}`);
+                    }
+                }}
             >
-                <image
-                    iconName={accessPoint.iconName || "network-wireless-symbolic"}
-                    pixelSize={16}
-                />
-                <box orientation={Gtk.Orientation.HORIZONTAL} spacing={2} hexpand>
-                    <label
-                        label={accessPoint.ssid || "Hidden Network"}
-                        halign={Gtk.Align.START}
+                <box spacing={8}>
+                    <image
+                        iconName={accessPoint.iconName || "network-wireless-symbolic"}
+                        pixelSize={16}
                     />
-                    <With value={strengthBinding}>
-                        {(strength) => (
-                            <label
-                                label={`${strength}%`}
-                                cssClasses={["dim-label"]}
-                                halign={Gtk.Align.START}
-                            />
-                        )}
-                    </With>
-                    {accessPoint.requiresPassword && (
-                        <image
-                            iconName="m-lock-fill"
-                            pixelSize={16}
+                    <box orientation={Gtk.Orientation.HORIZONTAL} spacing={2} hexpand>
+                        <label
+                            label={accessPoint.ssid || "Hidden Network"}
+                            halign={Gtk.Align.START}
                         />
-                    )}
-                </box>
-                <With value={isActiveBinding}>
-                    {(isActive) => (
-                        <button
-                            cssClasses={["circle"]}
-                            onClicked={async () => {
-                                try {
-                                    if (isActive && network.wifi) {
-                                        network.wifi.deactivate_connection(null);
-                                    } else if (accessPoint.requiresPassword && !isActive) {
-                                        // Check if we have any existing connections for this AP
-                                        const existingConnections = accessPoint.get_connections();
-                                        if (existingConnections.length > 0) {
-                                            // Network was connected before, try to connect directly
-                                            accessPoint.activate(null, null)
-                                        } else {
-                                            // New network, show password field
-                                            setShowPasswordField(true);
-                                        }
-                                    } else {
-                                        await connect();
-                                    }
-                                } catch (error) {
-                                    console.error(`WiFi toggle failed: ${error}`);
-                                }
-                            }}
-                        >
+                        <With value={strengthBinding}>
+                            {(strength) => (
+                                <label
+                                    label={`${strength}%`}
+                                    cssClasses={["dim-label"]}
+                                    halign={Gtk.Align.START}
+                                />
+                            )}
+                        </With>
+                        {accessPoint.requiresPassword && (
                             <image
-                                iconName={isActive ? "m-wifi-off-cut" : "network-wireless-symbolic"}
+                                iconName="m-lock-fill"
                                 pixelSize={16}
                             />
-                        </button>
-                    )}
-                </With>
-            </box>
+                        )}
+                    </box>
+                    <button
+                        cssClasses={["circle"]}
+                    >
+                        <image
+                            iconName={isActiveBinding.as(isActive => isActive ? "m-wifi-off-cut" : "network-wireless-symbolic")}
+                            pixelSize={16}
+                        />
+                    </button>
+                </box>
+            </button>
 
             <With value={showPasswordField}>
                 {(showPasswordField) => showPasswordField && accessPoint.requiresPassword && (
