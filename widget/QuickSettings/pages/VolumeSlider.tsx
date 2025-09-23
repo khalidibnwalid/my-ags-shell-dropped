@@ -24,7 +24,10 @@ const volumeState = createComputed((get) => {
 
 export function VolumeStatus() {
     return (
-        <box>
+        <box
+            halign={Gtk.Align.CENTER}
+            valign={Gtk.Align.CENTER}
+        >
             <With value={volumeState}>
                 {({ iconName }) =>
                     <image

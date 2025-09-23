@@ -4,11 +4,11 @@ import { execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 import Hyprland from "gi://AstalHyprland"
 import { createBinding } from "gnim"
-import BatteryStatus from "./BatteryStatus"
-import BluetoothStatus from "./Bluetooth"
-import Workspaces from "./Workspaces"
 import { NetworkStatus } from "../QuickSettings/pages/Network"
 import { VolumeStatus } from "../QuickSettings/pages/VolumeSlider"
+import BatteryStatus from "./BatteryStatus"
+import Workspaces from "./Workspaces"
+import { BluetoothStatus } from "../QuickSettings/pages/Bluetooth"
 
 const hyprland = Hyprland.get_default()
 
@@ -107,17 +107,25 @@ function EndSection() {
           <BluetoothStatus />
           <VolumeStatus />
           <BatteryStatus />
-          <Clock />
+          <Date />
         </box>
       </button>
     </box >
   )
 }
 
-function Clock() {
+function Date() {
+  const date = createPoll("", 60000, "date +%d'/'%m")
   const time = createPoll("", 1000, "date +%I:%M")
 
   return (
-    <label cssName="clock" label={time.as(t => t.replace(":", "\n"))} />
+    <box
+      orientation={Gtk.Orientation.VERTICAL}
+      halign={Gtk.Align.CENTER}
+      spacing={0}
+    >
+      <label cssName="clock-label" label={time.as(t => t.replace(":", "\n"))} />
+      <label cssName="date-label" label={date} />
+    </box>
   )
 }

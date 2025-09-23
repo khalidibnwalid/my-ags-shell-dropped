@@ -5,6 +5,27 @@ import { ButtonWithOptions } from "../QuickSettings";
 
 const bluetooth = Bluetooth.get_default()
 
+export function BluetoothStatus() {
+    const enabledBinding = createBinding(bluetooth, "isPowered")
+    // TODO: icon if connected
+
+    return (
+        <box
+            halign={Gtk.Align.CENTER}
+            valign={Gtk.Align.CENTER}
+        >
+            <With value={enabledBinding}>
+                {(enabled) => (
+                    <image
+                        iconName={enabled ? "m-bluetooth" : "m-bluetooth-disabled"}
+                        pixelSize={24}
+                    />
+                )}
+            </With>
+        </box>
+    )
+}
+
 export function BluetoothButton() {
     const enabledBinding = createBinding(bluetooth, "isPowered")
     const connectingBinding = createBinding(bluetooth, "isConnected")

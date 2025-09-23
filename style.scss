@@ -16,7 +16,7 @@ $pure-theme-99: #{$pure-theme}99;
 $pure-anti-theme: #ffffff; // white for dark mode, black for light mode
 
 $window-shadow: 0 2px 8px $pure-theme;
-$bar-width: 40px;
+$bar-width: 45px;
 $cubic-bezier: cubic-bezier(0.05, 0.7, 0.1, 1);
 
 @keyframes fadeIn {
@@ -80,7 +80,7 @@ window.Bar {
     }
   }
 
-  clock {
+  clock-label {
     font-size: 20px;
     line-height: 1;
     letter-spacing: 0.5px;
@@ -91,6 +91,16 @@ window.Bar {
     :hover {
       color: $bg-color;
     }
+  }
+
+  date-label {
+    font-size: 10px;
+    padding: 0px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
+    color: $fg-color;
   }
 
   .island {
