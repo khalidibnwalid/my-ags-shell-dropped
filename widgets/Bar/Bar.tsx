@@ -4,11 +4,11 @@ import { execAsync } from "ags/process"
 import { createPoll } from "ags/time"
 import Hyprland from "gi://AstalHyprland"
 import { createBinding } from "gnim"
-import { NetworkStatus } from "../QuickSettings/pages/Network"
-import { VolumeStatus } from "../QuickSettings/pages/VolumeSlider"
 import Workspaces from "./Workspaces"
-import { BluetoothStatus } from "../QuickSettings/pages/Bluetooth"
-import { BatteryStatus } from "../QuickSettings/pages/Battery"
+import { BatteryStatus } from "../ControlPanel/QuickSettings/pages/Battery"
+import { NetworkStatus } from "../ControlPanel/QuickSettings/pages/Network"
+import { BluetoothStatus } from "../ControlPanel/QuickSettings/pages/Bluetooth"
+import { VolumeStatus } from "../ControlPanel/QuickSettings/pages/VolumeSlider"
 
 const hyprland = Hyprland.get_default()
 
@@ -79,7 +79,7 @@ function CenterSection() {
 function EndSection() {
 
   function openQuickSettings() {
-    const quicksettingsWindow = app.get_window("quicksettings-window")
+    const quicksettingsWindow = app.get_window("controlpanel-window")
     if (quicksettingsWindow) {
       quicksettingsWindow.visible = !quicksettingsWindow.visible
     }

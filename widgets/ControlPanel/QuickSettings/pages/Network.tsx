@@ -1,8 +1,7 @@
 import { Gtk } from "ags/gtk4";
 import { createBinding, createComputed, createState, For, With } from "gnim";
-import { ButtonWithOptions } from "../QuickSettings";
-
 import Network from "gi://AstalNetwork";
+import { ButtonWithOptions } from "../QuickSettingsBody";
 
 const network = Network.get_default()
 

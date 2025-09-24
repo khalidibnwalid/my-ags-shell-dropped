@@ -1,0 +1,7 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+window.controlpanel {
+  background: 'transparent';
+  padding-right: $bar-width + 4; // modal offset
+}

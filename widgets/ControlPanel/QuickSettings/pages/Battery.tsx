@@ -2,8 +2,8 @@ import { Gtk } from "ags/gtk4";
 import Battery from "gi://AstalBattery";
 import PowerProfiles from "gi://AstalPowerProfiles";
 import { createBinding, createComputed, With } from "gnim";
-import { formatTime } from "../../../utils/formatTime";
-import { ButtonWithOptions } from "../QuickSettings";
+import { ButtonWithOptions } from "../QuickSettingsBody";
+import { formatTime } from "../../../../utils/formatTime";
 
 const battery = Battery.get_default();
 const powerProfiles = PowerProfiles.get_default();

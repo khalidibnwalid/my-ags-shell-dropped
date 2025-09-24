@@ -1,7 +1,7 @@
 import app from "ags/gtk4/app"
 import style from "./style.scss"
-import Bar from "./widget/Bar"
-import QuickSettings from "./widget/QuickSettings"
+import Bar from "./widgets/Bar"
+import QuickSettings from "./widgets/ControlPanel"
 
 app.start({
   css: style,

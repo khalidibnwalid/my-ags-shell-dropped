@@ -1,11 +1,8 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-window.Quicksettings {
-  background: 'transparent';
-  padding-right: $bar-width + 4; // modal offset
-
-  stack.controlpanel {
+window.controlpanel {
+  stack.quicksettings-panel {
     min-width: 300px;
     // min-height: 300px;
     background: $pure-theme-99;
