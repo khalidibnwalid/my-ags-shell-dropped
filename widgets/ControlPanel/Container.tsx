@@ -1,6 +1,7 @@
 import { Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { Modal } from "../../components/Modal";
+import MediaPlayer from "./MediaPlayer";
 import { QuickSettingsBody } from "./QuickSettings/QuickSettingsBody";
 
 export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
@@ -17,8 +18,9 @@ export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
         >
             <box
                 orientation={Gtk.Orientation.VERTICAL}
-                spacing={8}
+                spacing={4}
             >
+                <MediaPlayer />
                 <QuickSettingsBody />
             </box>
         </Modal>
