@@ -29,7 +29,12 @@ export default function QuickSettings(gdkmonitor: Gdk.Monitor) {
                 print("Quick Settings activated")
             }}
         >
-            <Body />
+            <box
+                orientation={Gtk.Orientation.VERTICAL}
+                spacing={8}
+            >
+                <Body />
+            </box>
         </Modal>
     )
 }
@@ -90,6 +95,11 @@ function MainPage() {
                 hexpand
             >
                 <BatteryButton />
+                <button
+                    cssClasses={['quicksettings-btn']}
+                    label="..."
+                    hexpand
+                />
             </box>
             <VolumeSlider />
             {/* <Gtk.Calendar /> */}
@@ -113,7 +123,7 @@ export function ButtonWithOptions({
 }: ButtonWithOptionsProps) {
     return (
         <box
-            cssName='quicksettings-button'
+            cssName='quicksettings-btn-with-options'
             orientation={Gtk.Orientation.HORIZONTAL}
             spacing={4}
         >
