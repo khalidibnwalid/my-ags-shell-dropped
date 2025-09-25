@@ -32,6 +32,7 @@ export default function MediaPlayer() {
             heightRequest={210}
             visible={players.as((p) => p.length > 0)}
             overflow={Gtk.Overflow.HIDDEN}
+            hexpand
         >
             <box
                 cssClasses={["mediaplayer-backdrop"]}
@@ -189,7 +190,6 @@ function PlayerCard({ player }: { player: Mpris.Player }) {
                         class="title inner-label"
                         label={titleBinding.as((title) => title || "Unknown Title")}
                         halign={Gtk.Align.FILL}
-                        ellipsize={Pango.EllipsizeMode.END}
                         lines={2}
                         wrap
                     />

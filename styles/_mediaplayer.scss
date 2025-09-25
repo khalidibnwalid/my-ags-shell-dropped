@@ -1,7 +1,7 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-window.controlpanel {
+box.toppanel {
   .mediaplayer-body {
     margin: 0px 12px 12px 0px;
     border-radius: 30px;
