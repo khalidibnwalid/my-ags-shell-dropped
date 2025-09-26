@@ -1,0 +1,81 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Notifications styles
+window.notifications {
+    background-color: transparent;
+    min-width: 320px;
+
+    >box {
+        padding: 0;
+    }
+
+    .notification {
+        background-color: $pure-theme-99;
+        border-radius: 26px;
+        margin: 4px;
+        padding: 16px;
+        min-width: 400px;
+        max-width: 400px;
+        backdrop-filter: blur(10px);
+        transition: all 200ms $cubic-bezier;
+        animation: 200ms fadeIn $cubic-bezier;
+
+        &:hover {
+            background-color: #{$pure-theme}AA;
+            // transform: translateY(-4px);
+        }
+    }
+
+    .summary {
+        color: $pure-anti-theme;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .close {
+        background-color: transparent;
+        border: none;
+
+        padding: 4px;
+        border-radius: 100%;
+        min-height: 24px;
+        min-width: 24px;
+
+        &:hover,
+        &:active {
+            background-color: $accent-color;
+
+            image {
+                filter: grayscale(100%) invert(1) brightness(2);
+            }
+        }
+
+
+    }
+
+    .body {
+        color: $pure-anti-theme;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .actions {
+        padding-top: 8px;
+
+        button {
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 12px;
+            background-color: $accent-fg-color;
+            font-size: 12px;
+
+            &:hover,
+            &:active {
+                background-color: $accent-color;
+                border-color: $bg-color;
+            }
+        }
+    }
+
+}

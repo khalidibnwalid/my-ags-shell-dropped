@@ -3,6 +3,7 @@ import style from "./style.scss"
 import Bar from "./widgets/Bar"
 import QuickSettings from "./widgets/ControlPanel"
 import TopPanel from "./widgets/TopPanel"
+import NotificationPopups from "./widgets/Notifications"
 
 app.start({
   css: style,
@@ -11,5 +12,6 @@ app.start({
     app.get_monitors().map(Bar)
     app.get_monitors().map(QuickSettings)
     app.get_monitors().map(TopPanel)
+    app.get_monitors().map(NotificationPopups)
   },
 })
